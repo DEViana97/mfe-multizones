@@ -4,9 +4,17 @@ import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 
-async function getProduct(id: string) {
+interface DummyProduct {
+  id:          number
+  title:       string
+  description: string
+  price:       number
+  thumbnail:   string
+}
+
+async function getProduct(id: string): Promise<DummyProduct | null> {
   try {
-    const res = await fetch(`https://fakestoreapi.com/products/${id}`)
+    const res = await fetch(`https://dummyjson.com/products/${id}`)
     if (!res.ok) return null
     return res.json()
   } catch {
@@ -23,7 +31,7 @@ export async function generateMetadata(
   return {
     title:       `${product.title} | MFE Store`,
     description: product.description,
-    openGraph:   { images: [product.image] },
+    openGraph:   { images: [product.thumbnail] },
   }
 }
 
@@ -46,7 +54,7 @@ export default async function ProductDetailPage(
     <article style={{ padding: 24, maxWidth: 600, margin: '0 auto' }}>
       <div style={{ position: 'relative', height: 300 }}>
         <Image
-          src={product.image}
+          src={product.thumbnail}
           alt={product.title}
           fill
           style={{ objectFit: 'contain' }}

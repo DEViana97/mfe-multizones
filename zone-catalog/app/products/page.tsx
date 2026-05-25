@@ -8,11 +8,24 @@ export const metadata: Metadata = {
   description: 'Confira nossa seleção de produtos.',
 }
 
+interface DummyProduct {
+  id:        number
+  title:     string
+  price:     number
+  thumbnail: string
+}
+
 async function getProducts(): Promise<Product[]> {
   try {
-    const res = await fetch('https://fakestoreapi.com/products?limit=8')
+    const res = await fetch('https://dummyjson.com/products?limit=8')
     if (!res.ok) return []
-    return res.json()
+    const data = await res.json()
+    return (data.products as DummyProduct[]).map((p) => ({
+      id:    p.id,
+      title: p.title,
+      price: p.price,
+      image: p.thumbnail,
+    }))
   } catch {
     return []
   }
