@@ -1,17 +1,3 @@
-# 🗺️ Prompt — Micro-frontends com Next.js Multi-Zones (Projeto de Estudos)
-
-## Contexto
-
-Você está construindo um projeto de estudos sobre Micro-frontends usando
-**Next.js Multi-Zones** — a abordagem oficial e nativa do Next.js para
-micro-frontends, recomendada pela Vercel como substituta ao Module Federation.
-
-O projeto é o mesmo e-commerce de estudos, mas agora cada parte é uma
-**aplicação Next.js independente**, servindo um conjunto de rotas sob o
-mesmo domínio.
-
----
-
 ## O que é Multi-Zones (entenda antes de começar)
 
 Multi-Zones divide uma aplicação grande em aplicações Next.js menores, cada
