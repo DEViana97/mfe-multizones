@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    name: Quality Check — ${{ matrix.zone }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        zone: [zone-shell, zone-catalog, zone-cart]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: ${{ matrix.zone }}/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.zone }}
+        run: npm ci
+
+      - name: Lint
+        working-directory: ${{ matrix.zone }}
+        run: npm run lint
+
+      - name: Type check
+        working-directory: ${{ matrix.zone }}
+        run: npx tsc --noEmit
+
+      - name: Test
+        working-directory: ${{ matrix.zone }}
+        run: npm test -- --coverage --passWithNoTests
+
+      - name: Build
+        working-directory: ${{ matrix.zone }}
+        run: npm run build
+        env:
+          CATALOG_DOMAIN: ${{ secrets.CATALOG_DOMAIN }}
+          CART_DOMAIN:    ${{ secrets.CART_DOMAIN }}
+          SHELL_DOMAIN:   ${{ secrets.SHELL_DOMAIN }}
