@@ -4,11 +4,13 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 async function getProduct(id: string) {
-  const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
-    next: { revalidate: 60 },
-  })
-  if (!res.ok) throw new Error('Produto não encontrado')
-  return res.json()
+  try {
+    const res = await fetch(`https://fakestoreapi.com/products/${id}`)
+    if (!res.ok) return null
+    return res.json()
+  } catch {
+    return null
+  }
 }
 
 export async function generateMetadata(
@@ -16,6 +18,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { id } = await params
   const product = await getProduct(id)
+  if (!product) return { title: 'Produto | MFE Store' }
   return {
     title:       `${product.title} | MFE Store`,
     description: product.description,
@@ -28,6 +31,15 @@ export default async function ProductDetailPage(
 ) {
   const { id } = await params
   const product = await getProduct(id)
+
+  if (!product) {
+    return (
+      <section style={{ padding: 24 }}>
+        <p style={{ color: '#64748b' }}>Produto não encontrado.</p>
+        <a href="/products" style={{ color: '#3b82f6' }}>← Ver produtos</a>
+      </section>
+    )
+  }
 
   return (
     <article style={{ padding: 24, maxWidth: 600, margin: '0 auto' }}>

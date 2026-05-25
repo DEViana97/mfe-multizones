@@ -9,11 +9,13 @@ export const metadata: Metadata = {
 }
 
 async function getProducts(): Promise<Product[]> {
-  const res = await fetch('https://fakestoreapi.com/products?limit=8', {
-    next: { revalidate: 3600 },
-  })
-  if (!res.ok) throw new Error('Falha ao buscar produtos')
-  return res.json()
+  try {
+    const res = await fetch('https://fakestoreapi.com/products?limit=8')
+    if (!res.ok) return []
+    return res.json()
+  } catch {
+    return []
+  }
 }
 
 export default async function ProductsPage() {
@@ -22,15 +24,21 @@ export default async function ProductsPage() {
   return (
     <section style={{ padding: 24 }}>
       <h1>Produtos</h1>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-        gap: 16,
-      }}>
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      {products.length === 0 ? (
+        <p style={{ color: '#64748b' }}>
+          Não foi possível carregar os produtos. Tente novamente.
+        </p>
+      ) : (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+          gap: 16,
+        }}>
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      )}
     </section>
   )
 }
