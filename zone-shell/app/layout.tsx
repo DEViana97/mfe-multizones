@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Link from 'next/link'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -25,9 +26,9 @@ export default function RootLayout({
           borderBottom: '1px solid #e2e8f0',
           background: '#fff',
         }}>
-          <a href="/" style={{ fontWeight: 'bold', fontSize: 20, textDecoration: 'none', color: '#1e293b' }}>
+          <Link href="/" style={{ fontWeight: 'bold', fontSize: 20, textDecoration: 'none', color: '#1e293b' }}>
             MFE Store
-          </a>
+          </Link>
 
           <nav aria-label="Navegação principal">
             {/* /products → zone-catalog, /cart → zone-cart — usar <a>, não <Link> */}
