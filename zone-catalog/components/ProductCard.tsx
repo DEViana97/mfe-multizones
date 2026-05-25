@@ -1,4 +1,6 @@
-interface Product {
+import Image from 'next/image'
+
+export interface Product {
   id:    number
   title: string
   price: number
@@ -15,11 +17,14 @@ export function ProductCard({ product }: { product: Product }) {
       flexDirection: 'column',
       gap: 8,
     }}>
-      <img
-        src={product.image}
-        alt={product.title}
-        style={{ width: '100%', height: 160, objectFit: 'contain' }}
-      />
+      <div style={{ position: 'relative', height: 160 }}>
+        <Image
+          src={product.image}
+          alt={product.title}
+          fill
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
       <h2 style={{ fontSize: 14, margin: 0 }}>{product.title}</h2>
       <p style={{ fontWeight: 'bold', margin: 0 }}>
         R$ {product.price.toFixed(2)}

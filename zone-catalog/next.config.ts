@@ -5,6 +5,15 @@ const nextConfig: NextConfig = {
     ? '/catalog-static'
     : undefined,
 
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'fakestoreapi.com',
+      },
+    ],
+  },
+
   experimental: {
     serverActions: {
       allowedOrigins: [

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 
 export const revalidate = 60
@@ -30,11 +31,14 @@ export default async function ProductDetailPage(
 
   return (
     <article style={{ padding: 24, maxWidth: 600, margin: '0 auto' }}>
-      <img
-        src={product.image}
-        alt={product.title}
-        style={{ width: '100%', height: 300, objectFit: 'contain' }}
-      />
+      <div style={{ position: 'relative', height: 300 }}>
+        <Image
+          src={product.image}
+          alt={product.title}
+          fill
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
       <h1>{product.title}</h1>
       <p style={{ fontSize: 24, fontWeight: 'bold' }}>
         R$ {product.price.toFixed(2)}

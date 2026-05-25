@@ -1,4 +1,4 @@
-import { ProductCard } from '@/components/ProductCard'
+import { ProductCard, type Product } from '@/components/ProductCard'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: 'Confira nossa seleção de produtos.',
 }
 
-async function getProducts() {
+async function getProducts(): Promise<Product[]> {
   const res = await fetch('https://fakestoreapi.com/products?limit=8', {
     next: { revalidate: 3600 },
   })
@@ -25,7 +25,7 @@ export default async function ProductsPage() {
         gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
         gap: 16,
       }}>
-        {products.map((product: any) => (
+        {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
