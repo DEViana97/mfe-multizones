@@ -1,6 +1,8 @@
 import { ProductCard, type Product } from '@/components/ProductCard'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title:       'Produtos | MFE Store',
   description: 'Confira nossa seleção de produtos.',
