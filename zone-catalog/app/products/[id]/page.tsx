@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -36,7 +37,7 @@ export default async function ProductDetailPage(
     return (
       <section style={{ padding: 24 }}>
         <p style={{ color: '#64748b' }}>Produto não encontrado.</p>
-        <a href="/products" style={{ color: '#3b82f6' }}>← Ver produtos</a>
+        <Link href="/products" style={{ color: '#3b82f6' }}>← Ver produtos</Link>
       </section>
     )
   }
