@@ -1,0 +1,13 @@
+{
+  "name": "mfe-multizones",
+  "version": "1.0.0",
+  "description": "Projeto de estudos Multi-Zones com Next.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix zone-shell\" \"npm run dev --prefix zone-catalog\" \"npm run dev --prefix zone-cart\"",
+    "build:all": "npm run build --prefix zone-catalog && npm run build --prefix zone-cart && npm run build --prefix zone-shell",
+    "install:all": "npm install --prefix zone-shell && npm install --prefix zone-catalog && npm install --prefix zone-cart"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
